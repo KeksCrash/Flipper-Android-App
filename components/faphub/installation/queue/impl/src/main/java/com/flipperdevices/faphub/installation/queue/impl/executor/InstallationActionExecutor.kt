@@ -14,6 +14,7 @@ import com.flipperdevices.faphub.installation.queue.api.model.FapActionRequest
 import com.flipperdevices.faphub.installation.queue.impl.executor.actions.FapActionUpload
 import com.flipperdevices.faphub.installation.queue.impl.executor.actions.FapIconDownloader
 import com.flipperdevices.faphub.target.model.FlipperTarget
+import com.flipperdevices.faphub.utils.FapHubConstants
 import com.flipperdevices.faphub.utils.FapHubConstants.FLIPPER_APPS_FOLDER
 import kotlinx.coroutines.flow.first
 import java.io.File
@@ -36,7 +37,7 @@ class InstallationActionExecutor @Inject constructor(
         val target = request.toVersion.target as? FlipperTarget.Received
             ?: error("Failed download fap for $request")
         val path = uploadAndDownloadFap(request.toVersion.id, target, progressListener)
-        var finalFapPath = File(FLIPPER_APPS_FOLDER, request.categoryAlias).absolutePath
+        var finalFapPath = File(FLIPPER_APPS_FOLDER, FapHubConstants.mapCategoryAlias(request.categoryAlias)).absolutePath
         finalFapPath = File(finalFapPath, "${request.applicationAlias}.fap").absolutePath
 
         val iconBase64Request = fapIconDownloader.downloadToBase64(request.iconUrl).onFailure {

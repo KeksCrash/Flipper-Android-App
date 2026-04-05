@@ -14,6 +14,7 @@ import com.flipperdevices.faphub.dao.api.model.FapBuildState
 import com.flipperdevices.faphub.installation.button.api.FapButtonConfig
 import com.flipperdevices.faphub.installation.button.impl.model.OpenFapResult
 import com.flipperdevices.faphub.installation.button.impl.model.OpenFapState
+import com.flipperdevices.faphub.utils.FapHubConstants
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,7 +72,7 @@ class OpenFapHelperImpl @Inject constructor(
         }
 
         val path = APPS_PATH
-            .resolve(config.categoryAlias)
+            .resolve(FapHubConstants.mapCategoryAlias(config.categoryAlias))
             .resolve(config.applicationAlias.plus(".fap"))
         val fAppStartFeatureApi = fFeatureProvider.getSync<FAppStartFeatureApi>()
         if (fAppStartFeatureApi == null) {
